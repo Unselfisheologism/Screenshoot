@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="quality_options">
+        <item>@string/low_quality</item>
+        <item>@string/medium_quality</item>
+        <item>@string/high_quality</item>
+        <item>@string/custom_quality</item>
+    </string-array>
+
+    <string-array name="audio_options">
+        <item>@string/system_audio</item>
+        <item>@string/microphone_audio</item>
+        <item>@string/both_audio</item>
+        <item>@string/no_audio</item>
+    </string-array>
+</resources>
