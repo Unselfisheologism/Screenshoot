@@ -11,6 +11,14 @@
         android:layout_height="300dp"
         android:layout_marginBottom="16dp" />
 
+    <TextView
+        android:id="@+id/tv_video_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Duration: 00:00"
+        android:textSize="12sp"
+        android:layout_marginBottom="8dp" />
+
     <SeekBar
         android:id="@+id/seek_bar_trim"
         android:layout_width="match_parent"

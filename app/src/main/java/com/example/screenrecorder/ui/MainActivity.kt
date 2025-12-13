@@ -16,13 +16,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import com.example.screenrecorder.R
+import com.example.screenrecorder.ads.AdManager
 import com.example.screenrecorder.databinding.ActivityMainBinding
 import com.example.screenrecorder.service.RecordingService
 
-class MainActivity : AppCompatActivity(), RecordingService.RecordingCallback {
+class MainActivity : AppCompatActivity(), RecordingService.RecordingCallback, AdManager.AdCallback {
     
     private lateinit var binding: ActivityMainBinding
     private lateinit var mediaProjectionManager: MediaProjectionManager
+    private lateinit var adManager: AdManager
     private var recordingService: RecordingService? = null
     private var isServiceBound = false
     
@@ -48,8 +50,13 @@ class MainActivity : AppCompatActivity(), RecordingService.RecordingCallback {
         
         mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         
+        adManager = AdManager(this)
+        adManager.initializeAds()
+        adManager.setAdCallback(this)
+        
         setupUI()
         checkPermissions()
+        loadAds()
     }
     
     override fun onStart() {
@@ -65,6 +72,11 @@ class MainActivity : AppCompatActivity(), RecordingService.RecordingCallback {
             unbindService(serviceConnection)
             isServiceBound = false
         }
+    }
+    
+    override fun onDestroy() {
+        adManager.destroyAds()
+        super.onDestroy()
     }
     
     private fun setupUI() {
@@ -161,6 +173,31 @@ class MainActivity : AppCompatActivity(), RecordingService.RecordingCallback {
             updateUI()
             Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
         }
+    }
+    
+    private fun loadAds() {
+        try {
+            val adContainer = binding.adContainer
+            adManager.loadBannerAd(adContainer)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Failed to load ads", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    override fun onAdLoaded() {
+        Toast.makeText(this, "Ad loaded", Toast.LENGTH_SHORT).show()
+    }
+    
+    override fun onAdFailedToLoad(error: String) {
+        Toast.makeText(this, "Ad failed to load: $error", Toast.LENGTH_SHORT).show()
+    }
+    
+    override fun onAdShown() {
+        Toast.makeText(this, "Ad shown", Toast.LENGTH_SHORT).show()
+    }
+    
+    override fun onAdDismissed() {
+        Toast.makeText(this, "Ad dismissed", Toast.LENGTH_SHORT).show()
     }
     
     companion object {
