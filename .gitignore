@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local properties
+local.properties
+
+# Outputs
+app/build/
+.gradletasknamecache
